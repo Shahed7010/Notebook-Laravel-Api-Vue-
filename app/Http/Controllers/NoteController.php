@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\NoteResource;
 use App\Note;
 use Illuminate\Http\Request;
-use Mockery\Matcher\Not;
+
 
 class NoteController extends Controller
 {
@@ -21,7 +21,7 @@ class NoteController extends Controller
 
     public function index()
     {
-        return NoteResource::collection(Note::all());
+        return Note::all();
     }
 
     /**
@@ -47,7 +47,7 @@ class NoteController extends Controller
         ]);
         $note = new Note();
 //        $note->user_id = auth()->user()->id;
-        $note->body = $request->body;
+        $note->body = $request->note;
         if($note->save()){
             return response('success');
         }
