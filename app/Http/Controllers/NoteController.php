@@ -84,7 +84,15 @@ class NoteController extends Controller
      */
     public function update(Request $request, Note $note)
     {
-        //
+        $request->validate([
+            'body' => 'required',
+        ]);
+        $note = Note::find($note->id);
+//        $note->user_id = auth()->user()->id;
+        $note->body = $request->body;
+        if($note->save()){
+            return response('updated');
+        }
     }
 
     /**

@@ -35,6 +35,9 @@
               loggedIn: localStorage.getItem('loggedIn') == 'true'
           }
         },
+        mounted() {
+            // loggedIn: localStorage.getItem('loggedIn') == 'true'
+        },
         methods:{
             logout(){
 

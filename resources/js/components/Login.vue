@@ -57,21 +57,6 @@
                 });
             }
 
-            // saveNote(){
-            //     let token = localStorage.getItem('loggedIn')
-            //     if(token){
-            //         axios.get('c/api/user').then(res => {
-            //             console.log(res.data)
-            //             // this.$router.push('/')
-            //         }).catch(function (error) {
-            //             console.log(error.response);
-            //         });
-            //
-            //     }else{
-            //         this.$router.push('/login')
-            //     }
-            // }
-
         }
 
     };

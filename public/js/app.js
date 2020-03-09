@@ -2008,9 +2008,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      note: {
+        body: '',
+        id: ''
+      },
       items: []
     };
   },
@@ -2026,14 +2066,28 @@ __webpack_require__.r(__webpack_exports__);
         _this.items = res.data;
       });
     },
-    deleteNote: function deleteNote(key, id) {
+    editNote: function editNote(key) {
+      this.note.body = this.items[key].body;
+      this.note.id = this.items[key].id;
+    },
+    updateNote: function updateNote(id) {
       var _this2 = this;
+
+      console.log(this.note);
+      axios.put("/api/notes/".concat(id), this.note).then(function (res) {
+        console.log(res);
+
+        _this2.getNotes();
+      });
+    },
+    deleteNote: function deleteNote(key, id) {
+      var _this3 = this;
 
       if (confirm("Are You Sure?")) {
         axios["delete"]("/api/notes/".concat(id)).then(function (res) {
           console.log("deleted");
 
-          _this2.items.splice(key, 1);
+          _this3.items.splice(key, 1);
         });
       }
     }
@@ -2110,21 +2164,7 @@ axios__WEBPACK_IMPORTED_MODULE_0___default.a.defaults.withCredentials = true;
           }
         });
       });
-    } // saveNote(){
-    //     let token = localStorage.getItem('loggedIn')
-    //     if(token){
-    //         axios.get('c/api/user').then(res => {
-    //             console.log(res.data)
-    //             // this.$router.push('/')
-    //         }).catch(function (error) {
-    //             console.log(error.response);
-    //         });
-    //
-    //     }else{
-    //         this.$router.push('/login')
-    //     }
-    // }
-
+    }
   }
 });
 
@@ -2174,6 +2214,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       loggedIn: localStorage.getItem('loggedIn') == 'true'
     };
+  },
+  mounted: function mounted() {// loggedIn: localStorage.getItem('loggedIn') == 'true'
   },
   methods: {
     logout: function logout() {
@@ -37756,7 +37798,23 @@ var render = function() {
             _vm._v(" "),
             _c("hr"),
             _vm._v(" "),
-            _c("button", { staticClass: "btn-primary" }, [_vm._v("Edit")]),
+            _c(
+              "button",
+              {
+                staticClass: "btn-primary",
+                attrs: {
+                  type: "button",
+                  "data-toggle": "modal",
+                  "data-target": "#myModal"
+                },
+                on: {
+                  click: function($event) {
+                    return _vm.editNote(key)
+                  }
+                }
+              },
+              [_vm._v("\n                    Edit\n                ")]
+            ),
             _vm._v(" "),
             _c(
               "button",
@@ -37774,10 +37832,99 @@ var render = function() {
         ])
       }),
       0
-    )
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "modal", attrs: { id: "myModal" } }, [
+      _c("div", { staticClass: "modal-dialog modal-dialog-centered" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", {}, [
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.note.body,
+                        expression: "note.body"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { autofocus: "" },
+                    domProps: { value: _vm.note.body },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.note, "body", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "float-right p-2" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { "data-dismiss": "modal" },
+                      on: {
+                        click: function($event) {
+                          return _vm.updateNote(_vm.note.id)
+                        }
+                      }
+                    },
+                    [_vm._v("Update")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { "data-dismiss": "modal" }
+                    },
+                    [_vm._v("Close")]
+                  )
+                ])
+              ]
+            )
+          ])
+        ])
+      ])
+    ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h4", { staticClass: "modal-title" }, [_vm._v("Update Note")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("×")]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
