@@ -95,6 +95,6 @@ class NoteController extends Controller
      */
     public function destroy(Note $note)
     {
-        //
+        Note::where('id',$note->id)->delete();
     }
 }

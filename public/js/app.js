@@ -2004,6 +2004,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2021,6 +2025,17 @@ __webpack_require__.r(__webpack_exports__);
         console.log(res.data);
         _this.items = res.data;
       });
+    },
+    deleteNote: function deleteNote(key, id) {
+      var _this2 = this;
+
+      if (confirm("Are You Sure?")) {
+        axios["delete"]("/api/notes/".concat(id)).then(function (res) {
+          console.log("deleted");
+
+          _this2.items.splice(key, 1);
+        });
+      }
     }
   }
 });
@@ -37734,12 +37749,29 @@ var render = function() {
     _c(
       "div",
       { staticClass: "card col-sm-6 p-5 mt-5" },
-      _vm._l(this.items, function(item) {
-        return _c(
-          "div",
-          { key: item.body, staticClass: "container bg-info mt-3" },
-          [_c("p", [_vm._v(_vm._s(item.body))])]
-        )
+      _vm._l(this.items, function(item, key) {
+        return _c("div", { staticClass: "container  mt-3" }, [
+          _c("div", { staticClass: "bg-light p-2" }, [
+            _c("p", [_vm._v(_vm._s(item.body))]),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c("button", { staticClass: "btn-primary" }, [_vm._v("Edit")]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn-danger",
+                on: {
+                  click: function($event) {
+                    return _vm.deleteNote(key, item.id)
+                  }
+                }
+              },
+              [_vm._v("Delete")]
+            )
+          ])
+        ])
       }),
       0
     )
